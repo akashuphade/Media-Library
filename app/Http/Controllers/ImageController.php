@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ImageRequest;
 use App\Models\Image;
-use Illuminate\Http\Request;
+use App\Services\StorageService;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ImageController extends Controller
 {
@@ -44,37 +45,13 @@ class ImageController extends Controller
      */
     public function store(ImageRequest $request)
     {
-
-        //Get the original file name
-        $filenameWithExtension = $request->file('image')->getClientOriginalName();
-
-        $fileSize = $request->file('image')->getSize();
-
-        //Extract only file name
-        $filename = pathinfo($filenameWithExtension, PATHINFO_FILENAME);
-
-        //Extract the extension
-        $extension = pathinfo($filenameWithExtension, PATHINFO_EXTENSION);
-
-        $fileNameToStore = $filename . '_' . time() . "." .$extension;
-
-        //Get meta data of the image
-        $data = getimagesize($request->file('image'));
-        $width = $data[0];
-        $height = $data[1];
-        $mime = $data["mime"];
-
-        //Save the image
-        $request->file('image')->storeAs("public/" . Auth::user()->id . "/images", $fileNameToStore);
-
+        $imageData =  StorageService::storeFileAndGetMetaData($request, "image", "images");
         $image = new Image();
         $image->description = $request->input('description');
-        $image->name = $fileNameToStore;
+        $image->name = $imageData["filename"];
         $image->user_id = Auth::id();
-        $image->filesize = $fileSize;
-        $image->height = $height;
-        $image->width = $width;
-        $image->mimeType = $mime;
+        $image->file_size = $imageData["file_size"];
+        $image->mime_type = $imageData["mime"];
 
         $image->save();
 
@@ -87,10 +64,8 @@ class ImageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Image $image)
     {
-        $image = Image::find($id);
-
         return view('images.show')->with('image', $image);
     }
 
@@ -100,9 +75,8 @@ class ImageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Image $image)
     {
-        $image = Image::find($id);
         return view('images.edit')->with('image', $image);
     }
 
@@ -113,16 +87,9 @@ class ImageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ImageRequest $request, Image $image)
     {
-        $this->validate($request, [
-            'description' => 'required'
-        ]);
-
-        $image = Image::find($id);
-        $image->description = $request->input('description');
-        $image->save();
-
+        $image->update($request->only(['description']));
         return redirect('/images')->with('status', 'Image description updated');
     }
 
@@ -132,10 +99,13 @@ class ImageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Image $image)
     {
-        $image = Image::find($id);
-        $image->delete();
-        return redirect('/images')->with('status', 'Image deleted');
+        if(Storage::delete('public/' . Auth::user()->id . '/images/' . $image->name)){
+            $image->delete();
+            return redirect('/images')->with('status', 'Image deleted');
+        } else {
+            return redirect('/images')->with('status', 'Error while deleting image.');
+        }
     }
 }

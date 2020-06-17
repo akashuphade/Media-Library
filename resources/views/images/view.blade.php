@@ -37,7 +37,9 @@
                                 </div>
                             </div>
                         @endforeach
-
+                        <div class="card-footer row justify-content-center">
+                            {{ $images->links() }}
+                        </div>
                     @else
                         <div class="card w-100">
                             <div class="card-header">
@@ -46,9 +48,7 @@
                         </div>
                     @endif
                 </div>
-                <div class="card-footer row justify-content-center">
-                    {{ $images->links() }}
-                </div>
+
             </div>
         </div>
     </div>

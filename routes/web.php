@@ -19,3 +19,4 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('images', 'ImageController');
+Route::resource('documents', 'DocumentController');
