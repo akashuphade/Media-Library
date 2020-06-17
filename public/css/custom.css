@@ -37,6 +37,12 @@
     border-radius: 3.25rem;
 }
 
+.card-align {
+    width: 303px;
+    height: 245px;
+    float: left;
+}
+
 .card-header {
     text-align: center;
     background-color: transparent;
