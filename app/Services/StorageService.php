@@ -56,10 +56,10 @@ class StorageService
         ];
     }
 
-    public static function removeMediaFromStorage($id, $folderName)
+    public static function removeMediaFromStorage($id)
     {
         $media = Media::find($id);
-        Storage::delete('public/' . Auth::user()->id . '/' . $folderName . '/' . $media->name);
+        Storage::delete('public/' . Auth::user()->id . '/' . ucfirst($media->media_type) . 's/' . $media->name);
     }
 
     public static function downloadMedia($id)

@@ -57,7 +57,7 @@ class MediaController extends Controller
 
     public function deleteImage($id)
     {
-        StorageService::removeMediaFromStorage($id,  "Images");
+        StorageService::removeMediaFromStorage($id);
         $this->media->deleteMedia($id);
         return redirect('/media/images')->with('status', 'Image deleted successfully');
     }
@@ -88,7 +88,7 @@ class MediaController extends Controller
 
     public function deleteDocument($id)
     {
-        StorageService::removeMediaFromStorage($id,  "Documents");
+        StorageService::removeMediaFromStorage($id);
         $this->media->deleteMedia($id);
         return redirect('/media/documents')->with('status', 'Document deleted successfully');
     }
