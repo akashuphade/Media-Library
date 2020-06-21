@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ImageRequest extends FormRequest
+class MediaRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,7 +26,7 @@ class ImageRequest extends FormRequest
         $validateArr = ['description' => 'required'];
 
         if ($this->method() === 'POST') {
-            $validateArr = array_merge($validateArr, ['image' => 'required|image|mimes:jpeg,jpg,png']);
+            $validateArr = array_merge($validateArr, ['media' => 'required|mimes:jpeg,jpg,png,pdf,mp3,mp4']);
         }
 
         return $validateArr;

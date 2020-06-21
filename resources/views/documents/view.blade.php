@@ -6,7 +6,6 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <a href="/documents/create" class="btn btn-primary float-left w-25">Add Document</a>
                     <h2 class="text-info float-center">Documents</h2>
                 </div>
 
@@ -28,24 +27,20 @@
                                     <td>{{$document->description}}</td>
                                     <td>{{$document->name}}</td>
                                     <td>
-                                        <form method="POST" action="/documents/{{$document->id}}">
+                                        <form method="POST" action="/media/document/{{$document->id}}">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-sm btn-danger float-right">Delete</button>
                                         </form>
-                                        <a href="/documents/{{$document->id}}" class="btn btn-sm btn-primary">View</a>
-                                        <a href="/documents/{{$document->id}}/edit" class="btn btn-sm btn-primary">Edit</a>
-                                        <a href="/documents/download/{{$document->id}}" class="btn btn-sm btn-primary">Download</a>
+                                        <a href="/media/document/{{$document->id}}" class="btn btn-sm btn-primary">View</a>
+                                        <a href="/media/document/{{$document->id}}/edit" class="btn btn-sm btn-primary">Edit</a>
+                                        <a href="/media/download/{{$document->id}}" class="btn btn-sm btn-primary">Download</a>
                                     </td>
                                 </tr>
 
                             @endforeach
                             </tbody>
                         </table>
-
-                        <div class="card-footer row justify-content-center">
-                            {{ $documents->links() }}
-                        </div>
                     @else
                         <div class="card w-100">
                             <div class="card-header">
@@ -53,6 +48,10 @@
                             </div>
                         </div>
                     @endif
+                </div>
+
+                <div class="row justify-content-center">
+                    {{ $documents->links() }}
                 </div>
 
             </div>

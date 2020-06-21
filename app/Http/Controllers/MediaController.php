@@ -2,110 +2,99 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ImageRequest;
-use App\Models\Image;
+use App\Http\Requests\MediaRequest;
+use App\Models\Media;
+use App\Repositories\Media\MediaRepository;
 use App\Services\StorageService;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 
-class ImageController extends Controller
+class MediaController extends Controller
 {
 
-    public function __construct()
+    private $media;
+
+    public function __construct(MediaRepository $media)
     {
         $this->middleware('auth');
+        $this->media = $media;
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+
+    public function getUploadView()
     {
-        //Get all the images
-        $images = Image::orderBy('created_at', 'desc')->paginate(6);
+        return view('upload');
+    }
+
+    public function uploadMedia(MediaRequest $request)
+    {
+        //store media in storage and get the required information back
+        $mediaInformation = StorageService::storeFileAndGetMetaData($request, 'media');
+        $this->media->saveMedia($request, $mediaInformation);
+        return redirect('home')->with('status', 'Media added successfully');
+    }
+
+    public function getImages()
+    {
+        $images = $this->media->getImages();
         return view('images.view')->with('images', $images);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function getImagebyId($id)
     {
-        return view('images.create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(ImageRequest $request)
-    {
-        $imageData =  StorageService::storeFileAndGetMetaData($request, "image", "images");
-        $image = new Image();
-        $image->description = $request->input('description');
-        $image->name = $imageData["filename"];
-        $image->user_id = Auth::id();
-        $image->file_size = $imageData["file_size"];
-        $image->mime_type = $imageData["mime"];
-
-        $image->save();
-
-        return redirect('/images')->with('status', 'Image uploaded successfully');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Image $image)
-    {
+        $image = $this->media->getImagebyId($id);
         return view('images.show')->with('image', $image);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Image $image)
+    public function editImage($id)
     {
+        $image = $this->media->getImagebyId($id);
         return view('images.edit')->with('image', $image);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(ImageRequest $request, Image $image)
+    public function updateImage(MediaRequest $request, $id)
     {
-        $image->update($request->only(['description']));
-        return redirect('/images')->with('status', 'Image description updated');
+        $this->media->updateMedia($request, $id);
+        return redirect('/media/images')->with('status', 'Image updated successfully');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Image $image)
+    public function deleteImage($id)
     {
-        if(Storage::delete('public/' . Auth::user()->id . '/images/' . $image->name)){
-            $image->delete();
-            return redirect('/images')->with('status', 'Image deleted');
-        } else {
-            return redirect('/images')->with('status', 'Error while deleting image.');
-        }
+        StorageService::removeMediaFromStorage($id,  "Images");
+        $this->media->deleteMedia($id);
+        return redirect('/media/images')->with('status', 'Image deleted successfully');
+    }
+
+    public function getDocuments()
+    {
+        $documents = $this->media->getDocuments();
+        return view('documents.view')->with('documents', $documents);
+    }
+
+    public function getDocumentById($id)
+    {
+        $document = $this->media->getDocumentById($id);
+        return view('documents.show')->with('document', $document);
+    }
+
+    public function editDocument($id)
+    {
+        $image = $this->media->getDocumentbyId($id);
+        return view('documents.edit')->with('document', $image);
+    }
+
+    public function updateDocument(MediaRequest $request, $id)
+    {
+        $this->media->updateMedia($request, $id);
+        return redirect('/media/documents')->with('status', 'Document updated successfully');
+    }
+
+    public function deleteDocument($id)
+    {
+        StorageService::removeMediaFromStorage($id,  "Documents");
+        $this->media->deleteMedia($id);
+        return redirect('/media/documents')->with('status', 'Document deleted successfully');
+    }
+
+    public function downloadMedia($id)
+    {
+        return StorageService::downloadMedia($id);
     }
 }

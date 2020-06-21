@@ -6,7 +6,6 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <a href="/images/create" class="btn btn-primary float-left w-25">Add Image</a>
                     <h2 class="text-info float-center">Images</h2>
                 </div>
 
@@ -19,9 +18,10 @@
                             <div class="card mr-3 mb-2 card-align">
 
                                 <div class="card-header">
-                                    <a href="/images/{{$image->id}}/edit" class="btn btn-sm btn-primary float-left">Edit</a>
-                                    <a href="/images/{{$image->id}}" class="btn btn-sm btn-primary float-left ml-2">View</a>
-                                    <form method="POST" action="/images/{{$image->id}}" >
+                                    <a href="/media/image/{{$image->id}}/edit" class="btn btn-sm btn-primary float-left">Edit</a>
+                                    <a href="/media/image/{{$image->id}}" class="btn btn-sm btn-primary float-left ml-2">View</a>
+                                    <a href="/media/download/{{$image->id}}" class="btn btn-sm btn-primary float-left ml-2">Download</a>
+                                    <form method="POST" action="/media/image/{{$image->id}}" >
                                         @csrf
                                         @method('DELETE')
 
@@ -29,7 +29,7 @@
                                     </form>
                                 </div>
 
-                                <img src="/storage/{{Auth::user()->id}}/images/{{$image->name}}" alt="{{$image->name}}" height="150px" width="300px">
+                                <img src="/storage/{{Auth::user()->id}}/Images/{{$image->name}}" alt="{{$image->name}}" height="150px" width="300px">
 
                                 <div class="card-footer">
                                     <label class="text-success">Description:</label>
@@ -37,9 +37,6 @@
                                 </div>
                             </div>
                         @endforeach
-                        <div class="card-footer row justify-content-center">
-                            {{ $images->links() }}
-                        </div>
                     @else
                         <div class="card w-100">
                             <div class="card-header">
@@ -48,6 +45,11 @@
                         </div>
                     @endif
                 </div>
+                @if(count($images) === 6)
+                <div class="card-footer row justify-content-center">
+                    {{ $images->links() }}
+                </div>
+                @endif
 
             </div>
         </div>

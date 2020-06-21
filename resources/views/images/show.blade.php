@@ -6,7 +6,7 @@
 
             <div class="card card-align w-100">
                 <div class="card-header">
-                    <a href="/images" class="btn btn-sm btn-primary float-left">Go back</a>
+                    <a href="/media/images" class="btn btn-sm btn-primary float-left">Go back</a>
                     <h2 class="text-info">View Details</h2>
                 </div>
                 <div class="card-body">
@@ -24,7 +24,7 @@
                     </div>
                 </div>
             </div>
-            <img src="/storage/{{Auth::user()->id}}/images/{{$image->name}}" alt="{{$image->name}}" width="100%">
+            <img src="/storage/{{Auth::user()->id}}/Images/{{$image->name}}" alt="{{$image->name}}" width="100%">
         </div>
 
     </div>

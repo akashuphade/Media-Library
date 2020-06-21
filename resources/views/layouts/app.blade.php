@@ -55,11 +55,11 @@
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link custom-nav" href="/images">{{ __('Images') }}</a>
+                                <a class="nav-link custom-nav" href="/media/images">{{ __('Images') }}</a>
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link custom-nav" href="/documents">{{ __('Documents') }}</a>
+                                <a class="nav-link custom-nav" href="/media/documents">{{ __('Documents') }}</a>
                             </li>
 
                             <li class="nav-item dropdown">

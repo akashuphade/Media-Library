@@ -5,24 +5,22 @@
     <div class="row justify-content-center">
         <div class="col-md-10">
             <div class="card">
-                <div class="card-header"><strong class="text-info">Media Library</strong></div>
+                <div class="card-header">
+                    <a href="media/upload" class="btn btn-success btn-sm float-left">Upload Media</a>
+                    <strong class="text-info">Media Library</strong>
+                </div>
 
                 <div class="row card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
 
                     <div class="card col-md-3 m-auto">
                         <div class="card-body">
-                            <a href="/images">Images</a>
+                            <a href="/media/images">Images</a>
                         </div>
                     </div>
 
                     <div class="card col-md-3 m-auto">
                         <div class="card-body">
-                            <a href="/documents">Documents</a>
+                            <a href="/media/documents">Documents</a>
                         </div>
                     </div>
 
