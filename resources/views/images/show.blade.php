@@ -18,15 +18,9 @@
                     </div>
                     <div class="row">
                         <label class="col-md-3 text-md-right font-weight-bold">Size:</label>
-                        <label class="col-md-3 text-md-left">{{$image->fileSize}} bytes</label>
-                        <label class="col-md-3 text-md-right font-weight-bold">Height:</label>
-                        <label class="col-md-3 text-md-left">{{$image->height}} px</label>
-                    </div>
-                    <div class="row">
-                        <label class="col-md-3 text-md-right font-weight-bold">Width:</label>
-                        <label class="col-md-3 text-md-left">{{$image->width}} px</label>
+                        <label class="col-md-3 text-md-left">{{$image->file_size}} bytes</label>
                         <label class="col-md-3 text-md-right font-weight-bold">Mime-type:</label>
-                        <label class="col-md-3 text-md-left">{{$image->mimeType}}</label>
+                        <label class="col-md-3 text-md-left">{{$image->mime_type}}</label>
                     </div>
                 </div>
             </div>
