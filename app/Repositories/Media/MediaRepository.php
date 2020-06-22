@@ -26,4 +26,7 @@ interface MediaRepository
 
     public function getEmbeddedVideos();
 
+    public function changeFavourite($id);
+
+    public function getFavouriteMedia($mediaType);
 }

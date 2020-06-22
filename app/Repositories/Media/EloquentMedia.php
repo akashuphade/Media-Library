@@ -45,6 +45,13 @@ class EloquentMedia implements MediaRepository
         $media->save();
     }
 
+    public function changeFavourite($id)
+    {
+        $media = $this->media::find($id);
+        $media->favourite = !$media->favourite;
+        $media->save();
+    }
+
     public function deleteMedia($id)
     {
         $media = $this->media::find($id);
@@ -79,5 +86,15 @@ class EloquentMedia implements MediaRepository
     public function getEmbeddedVideos()
     {
         return $this->media::where(['media_type' => 'embedded', 'user_id' => Auth::user()->id])->orderBy('created_at', 'desc')->paginate(15);
+    }
+
+    public function getFavouriteMedia($mediaType)
+    {
+        if($mediaType === "image")
+            $limit  = 6;
+        else
+            $limit = 15;
+
+        return $this->media::where(['media_type' => $mediaType, 'favourite' => '1', 'user_id' => Auth::user()->id])->orderBy('created_at', 'desc')->paginate($limit);
     }
 }

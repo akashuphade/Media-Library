@@ -6,7 +6,9 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <a href="/home" class="btn btn-primary float-left">Back</a>
+                    @if(!Request::is('media/favourites/image'))
+                        <a href="/home" class="btn btn-primary float-left">Back</a>
+                    @endif
                     <h2 class="text-info float-center">Images</h2>
                 </div>
 
@@ -30,11 +32,16 @@
                                     </form>
                                 </div>
 
-                                <img src="/storage/{{Auth::user()->id}}/Images/{{$image->name}}" alt="{{$image->name}}" height="150px" width="300px">
+                                <img src="/storage/{{Auth::user()->id}}/Images/{{$image->name}}" alt="{{$image->name}}" height="150px" width="330px">
 
                                 <div class="card-footer">
+                                    <form method="POST" action="/media/favourite/{{$image->id}}">
+                                        @csrf
+                                        <button type="submit" class="btn btn-danger btn-sm float-right"> {{$image->favourite == 0 ? "Add to favourite" : "Remove from favourite" }} </button>
+                                    </form>
                                     <label class="text-success">Description:</label>
                                     <span> <a href="/images/{{$image->id}}">{{$image->description}}</a>
+
                                 </div>
                             </div>
                         @endforeach

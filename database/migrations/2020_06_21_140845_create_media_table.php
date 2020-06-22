@@ -21,6 +21,7 @@ class CreateMediaTable extends Migration
             $table->string('mime_type')->nullable();
             $table->string('media_type');
             $table->bigInteger('file_size')->nullable();
+            $table->tinyInteger('favourite')->default('0');
             $table->timestamps();
         });
     }

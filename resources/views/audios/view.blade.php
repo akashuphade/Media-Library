@@ -6,7 +6,9 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <a href="/home" class="btn btn-primary float-left">Back</a>
+                    @if(!Request::is('media/favourites/audio'))
+                        <a href="/home" class="btn btn-primary float-left">Back</a>
+                    @endif
                     <h2 class="text-info float-center">Audios</h2>
                 </div>
 
@@ -17,9 +19,9 @@
                         <table class="table table-hover table-striped table-bordered">
                             <thead>
                                 <tr>
-                                    <th>Description</th>
-                                    <th>Audio</th>
-                                    <th>Action</th>
+                                    <th width="25%">Description</th>
+                                    <th width="35%">Audio</th>
+                                    <th width="40%">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -32,6 +34,10 @@
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-sm btn-danger float-right">Delete</button>
+                                        </form>
+                                        <form method="POST" action="/media/favourite/{{$audio->id}}">
+                                            @csrf
+                                            <button type="submit" class="btn btn-danger btn-sm mr-2 float-right"> {{$audio->favourite == 0 ? "Add to favourite" : "Remove from favourite" }} </button>
                                         </form>
                                         <a href="/media/audio/{{$audio->id}}" class="btn btn-sm btn-primary">View</a>
                                         <a href="/media/audio/{{$audio->id}}/edit" class="btn btn-sm btn-primary">Edit</a>

@@ -64,3 +64,8 @@ Route::put('media/video/{id}', 'MediaController@updateVideo');
 
 //Download media
 Route::get('media/download/{id}', 'MediaController@downloadMedia');
+
+//Add/remove from favourites
+Route::post('media/favourite/{id}', 'MediaController@changeFavourite');
+Route::get('media/favourites', 'MediaController@getFavourites')->name('favourites');
+Route::get('media/favourites/{media}', 'MediaController@getFavouriteMedia');

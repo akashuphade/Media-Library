@@ -61,23 +61,7 @@
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link custom-nav" href="/media/images">{{ __('Images') }}</a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link custom-nav" href="/media/documents">{{ __('Documents') }}</a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link custom-nav" href="/media/audios">{{ __('Audios') }}</a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link custom-nav" href="/media/videos">{{ __('Videos') }}</a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link custom-nav" href="/media/embedded">{{ __('Embedded Videos') }}</a>
+                                <a class="nav-link custom-nav" href="{{ route('favourites') }}">{{ __('Favourites') }}</a>
                             </li>
 
                             <li class="nav-item dropdown">

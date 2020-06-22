@@ -4,7 +4,7 @@
 
 <div class="card">
     <div class="card-header">
-        <a href="/media/documents" class="btn btn-primary float-left">Back</a>
+        <a href="{{ url()->previous() }}" class="btn btn-primary float-left">Back</a>
         <h3>Document Details</h3>
     </div>
     <div class="card-body">

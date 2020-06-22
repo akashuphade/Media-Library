@@ -6,7 +6,7 @@
 
             <div class="card card-align w-100">
                 <div class="card-header">
-                    <a href="/media/images" class="btn btn-sm btn-primary float-left">Go back</a>
+                    <a href="{{ url()->previous() }}" class="btn btn-sm btn-primary float-left">Back</a>
                     <h2 class="text-info">View Details</h2>
                 </div>
                 <div class="card-body">

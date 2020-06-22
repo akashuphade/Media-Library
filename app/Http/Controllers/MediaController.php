@@ -182,4 +182,48 @@ class MediaController extends Controller
         $video = $this->media->getMediaById($id);
         return view('embedded.show')->with('video', $video);
     }
+
+    public function changeFavourite($id)
+    {
+        $this->media->changeFavourite($id);
+        return redirect()->back();
+    }
+
+    public function getFavourites()
+    {
+        return view('favourites');
+    }
+
+    public function getFavouriteMedia($mediaType)
+    {
+        $media = $this->media->getFavouriteMedia($mediaType);
+        switch ($mediaType) {
+            case 'image':
+                $view = "images.view";
+                $data = "images";
+                break;
+
+            case 'document':
+                $view = "documents.view";
+                $data = "documents";
+                break;
+
+            case 'audio':
+                $view = "audios.view";
+                $data = "audios";
+                break;
+
+            case 'video':
+                $view = "videos.view";
+                $data = "videos";
+                break;
+
+            case 'embedded':
+                $view = "embedded.view";
+                $data = "videos";
+                break;
+        }
+
+        return view($view)->with($data, $media);
+    }
 }

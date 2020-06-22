@@ -6,7 +6,9 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <a href="/home" class="btn btn-primary float-left">Back</a>
+                    @if(!Request::is('media/favourites/embedded'))
+                        <a href="/home" class="btn btn-primary float-left">Back</a>
+                    @endif
                     <h2 class="text-info float-center">Embedded Videos</h2>
                 </div>
 
@@ -18,8 +20,8 @@
                             <thead>
                                 <tr>
                                     <th width="25%">Description</th>
-                                    <th width="50%">Link</th>
-                                    <th width="25%">Action</th>
+                                    <th width="40%">Link</th>
+                                    <th width="35%">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -33,9 +35,12 @@
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-sm btn-danger float-right">Delete</button>
                                         </form>
+                                        <form method="POST" action="/media/favourite/{{$video->id}}">
+                                            @csrf
+                                            <button type="submit" class="btn btn-danger btn-sm mr-2 float-right"> {{$video->favourite == 0 ? "Add to favourite" : "Remove from favourite" }} </button>
+                                        </form>
                                         <a href="/media/embedded/{{$video->id}}" class="btn btn-sm btn-primary">View</a>
                                         <a href="/media/video/{{$video->id}}/edit" class="btn btn-sm btn-primary">Edit</a>
-                                        <a href="/media/download/{{$video->id}}" class="btn btn-sm btn-primary">Download</a>
                                     </td>
                                 </tr>
 
