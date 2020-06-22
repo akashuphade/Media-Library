@@ -6,9 +6,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    @if(!Request::is('media/favourites/embedded'))
-                        <a href="/home" class="btn btn-primary float-left">Back</a>
-                    @endif
+                    <a href="{{ url()->previous() }}" class="btn btn-primary float-left">Back</a>
                     <h2 class="text-info float-center">Embedded Videos</h2>
                 </div>
 
