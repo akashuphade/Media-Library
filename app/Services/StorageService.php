@@ -15,8 +15,8 @@ class StorageService
         $mediaTypeFolders = [
             "image" => "Images",
             "document" => "Documents",
-            "mp3" => "Audios",
-            "mp4" => "Videos"
+            "audio" => "Audios",
+            "video" => "Videos"
         ];
 
         //Get the original file name
@@ -39,10 +39,10 @@ class StorageService
             $mediaType = 'image';
         } elseif (stripos($mime, 'pdf') !== false) {
             $mediaType = 'document';
-        } elseif (stripos($mime, 'mp3') !== false) {
-            $mediaType = 'mp3';
-        } elseif (stripos($mime, 'mp4') !== false) {
-            $mediaType = 'mp4';
+        } elseif (stripos($mime, 'mp3') !== false || stripos($mime, 'audio') !== false) {
+            $mediaType = 'audio';
+        } elseif (stripos($mime, 'mp4') !== false || stripos($mime, 'video') !== false) {
+            $mediaType = 'video';
         }
 
         //Save the image

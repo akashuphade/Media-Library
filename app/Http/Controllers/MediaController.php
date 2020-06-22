@@ -39,13 +39,13 @@ class MediaController extends Controller
 
     public function getImagebyId($id)
     {
-        $image = $this->media->getImagebyId($id);
+        $image = $this->media->getMediabyId($id);
         return view('images.show')->with('image', $image);
     }
 
     public function editImage($id)
     {
-        $image = $this->media->getImagebyId($id);
+        $image = $this->media->getMediabyId($id);
         return view('images.edit')->with('image', $image);
     }
 
@@ -70,13 +70,13 @@ class MediaController extends Controller
 
     public function getDocumentById($id)
     {
-        $document = $this->media->getDocumentById($id);
+        $document = $this->media->getMediabyId($id);
         return view('documents.show')->with('document', $document);
     }
 
     public function editDocument($id)
     {
-        $image = $this->media->getDocumentbyId($id);
+        $image = $this->media->getMediabyId($id);
         return view('documents.edit')->with('document', $image);
     }
 
@@ -96,5 +96,90 @@ class MediaController extends Controller
     public function downloadMedia($id)
     {
         return StorageService::downloadMedia($id);
+    }
+
+    public function getAudios()
+    {
+        $audios = $this->media->getAudios();
+        return view('audios.view')->with('audios', $audios);
+    }
+
+    public function getAudioById($id)
+    {
+        $audio = $this->media->getMediabyId($id);
+        return view('audios.show')->with('audio', $audio);
+    }
+
+    public function editAudio($id)
+    {
+        $audio = $this->media->getMediabyId($id);
+        return view('audios.edit')->with('audio', $audio);
+    }
+
+    public function updateAudio(MediaRequest $request, $id)
+    {
+        $this->media->updateMedia($request, $id);
+        return redirect('/media/audios')->with('status', 'Audio updated successfully');
+    }
+
+    public function deleteAudio($id)
+    {
+        StorageService::removeMediaFromStorage($id);
+        $this->media->deleteMedia($id);
+        return redirect('/media/audios')->with('status', 'Audio deleted successfully');
+    }
+
+    public function getVideos()
+    {
+        $videos = $this->media->getVideos();
+        return view('videos.view')->with('videos', $videos);
+    }
+
+    public function getVideoById($id)
+    {
+        $video = $this->media->getMediabyId($id);
+        return view('videos.show')->with('video', $video);
+    }
+
+    public function editVideo($id)
+    {
+        $video = $this->media->getMediabyId($id);
+        return view('videos.edit')->with('video', $video);
+    }
+
+    public function updateVideo(MediaRequest $request, $id)
+    {
+        $this->media->updateMedia($request, $id);
+        return redirect('/media/videos')->with('status', 'Video updated successfully');
+    }
+
+    public function deleteVideo($id)
+    {
+        StorageService::removeMediaFromStorage($id);
+        $this->media->deleteMedia($id);
+        return redirect('/media/videos')->with('status', 'Video deleted successfully');
+    }
+
+    public function getEmbedView()
+    {
+        return view('embed');
+    }
+
+    public function embedMedia(MediaRequest $request)
+    {
+        $this->media->saveEmbeddedMedia($request);
+        return redirect('/home')->with('status', 'Media Embedded successfully');
+    }
+
+    public function getEmbeddedVideos()
+    {
+        $videos = $this->media->getEmbeddedVideos();
+        return view('embedded.view')->with('videos', $videos);
+    }
+
+    public function getEmbeddedVideoById($id)
+    {
+        $video = $this->media->getMediaById($id);
+        return view('embedded.show')->with('video', $video);
     }
 }

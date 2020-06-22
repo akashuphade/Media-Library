@@ -8,20 +8,22 @@ interface MediaRepository
 {
     public function saveMedia(MediaRequest $request, array $mediaInformation);
 
+    public function saveEmbeddedMedia(MediaRequest $request);
+
     public function updateMedia(MediaRequest $request, $id);
 
     public function deleteMedia($id);
 
+    public function getMediaById($id);
+
     public function getImages();
 
-    public function getImageById($id);
-
     public function getDocuments();
-
-    public function getDocumentById($id);
 
     public function getAudios();
 
     public function getVideos();
+
+    public function getEmbeddedVideos();
 
 }

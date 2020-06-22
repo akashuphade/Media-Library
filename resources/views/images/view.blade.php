@@ -6,6 +6,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
+                    <a href="/home" class="btn btn-primary float-left">Back</a>
                     <h2 class="text-info float-center">Images</h2>
                 </div>
 

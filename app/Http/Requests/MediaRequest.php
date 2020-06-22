@@ -23,12 +23,19 @@ class MediaRequest extends FormRequest
      */
     public function rules()
     {
-        $validateArr = ['description' => 'required'];
+        if(stripos(url()->current(), 'embed') !== false) {
+            $validateArr = [
+                "description" => "required",
+                "link" => "required"
+            ];
+        } else {
 
-        if ($this->method() === 'POST') {
-            $validateArr = array_merge($validateArr, ['media' => 'required|mimes:jpeg,jpg,png,pdf,mp3,mp4']);
+            $validateArr = ["description" => "required"];
+
+            if ($this->method() === "POST") {
+                $validateArr = array_merge($validateArr, ["media" => "required|mimes:jpeg,jpg,png,pdf,audio/mpeg,mpga,mp3,wav,mp4"]);
+            }
         }
-
         return $validateArr;
     }
 }

@@ -7,35 +7,35 @@
             <div class="card">
                 <div class="card-header">
                     <a href="/home" class="btn btn-primary float-left">Back</a>
-                    <h2 class="text-info float-center">Documents</h2>
+                    <h2 class="text-info float-center">Audios</h2>
                 </div>
 
                 <div class="card-body">
 
-                    @if(count($documents) > 0)
+                    @if(count($audios) > 0)
 
                         <table class="table table-hover table-striped table-bordered">
                             <thead>
                                 <tr>
                                     <th>Description</th>
-                                    <th>document</th>
+                                    <th>Audio</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                            @foreach ($documents as $document)
+                            @foreach ($audios as $audio)
                                 <tr>
-                                    <td>{{$document->description}}</td>
-                                    <td>{{$document->name}}</td>
+                                    <td>{{$audio->description}}</td>
+                                    <td>{{$audio->name}}</td>
                                     <td>
-                                        <form method="POST" action="/media/document/{{$document->id}}">
+                                        <form method="POST" action="/media/audio/{{$audio->id}}">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-sm btn-danger float-right">Delete</button>
                                         </form>
-                                        <a href="/media/document/{{$document->id}}" class="btn btn-sm btn-primary">View</a>
-                                        <a href="/media/document/{{$document->id}}/edit" class="btn btn-sm btn-primary">Edit</a>
-                                        <a href="/media/download/{{$document->id}}" class="btn btn-sm btn-primary">Download</a>
+                                        <a href="/media/audio/{{$audio->id}}" class="btn btn-sm btn-primary">View</a>
+                                        <a href="/media/audio/{{$audio->id}}/edit" class="btn btn-sm btn-primary">Edit</a>
+                                        <a href="/media/download/{{$audio->id}}" class="btn btn-sm btn-primary">Download</a>
                                     </td>
                                 </tr>
 
@@ -45,14 +45,14 @@
                     @else
                         <div class="card w-100">
                             <div class="card-header">
-                                No Documents
+                                No Audios
                             </div>
                         </div>
                     @endif
                 </div>
 
                 <div class="row justify-content-center">
-                    {{ $documents->links() }}
+                    {{ $audios->links() }}
                 </div>
 
             </div>

@@ -5,6 +5,7 @@ namespace App\Repositories\Media;
 use App\Http\Requests\MediaRequest;
 use App\Models\Media;
 use App\Repositories\Media\MediaRepository;
+use Illuminate\Support\Facades\Auth;
 
 class EloquentMedia implements MediaRepository
 {
@@ -19,9 +20,21 @@ class EloquentMedia implements MediaRepository
         //Store the media information
         $this->media->description = $request->input('description');
         $this->media->name = $mediaInformation['file_name'];
+        $this->media->user_id = Auth::user()->id;
         $this->media->file_size = $mediaInformation['file_size'];
         $this->media->mime_type = $mediaInformation['mime_type'];
         $this->media->media_type = $mediaInformation['media_type'];
+        $this->media->save();
+    }
+
+    public function saveEmbeddedMedia(MediaRequest $request)
+    {
+        $this->media->description = $request->input("description");
+        $this->media->name = $request->input('link');
+        $this->media->user_id = Auth::user()->id;
+        $this->media->mime_type = "video";
+        $this->media->file_size = 0;
+        $this->media->media_type = "embedded";
         $this->media->save();
     }
 
@@ -38,35 +51,33 @@ class EloquentMedia implements MediaRepository
         $media->delete();
     }
 
+    public function getMediaById($id)
+    {
+        return $this->media::find($id);
+    }
 
     public function getImages()
     {
-        return $this->media::where('media_type', 'image')->orderBy('created_at', 'desc')->paginate(6);
-    }
-
-    public function getImageById($id)
-    {
-        return $this->media::find($id);
+        return $this->media::where(['media_type' => 'image', 'user_id' => Auth::user()->id])->orderBy('created_at', 'desc')->paginate(6);
     }
 
     public function getDocuments()
     {
-        return $this->media::where('media_type', 'document')->orderBy('created_at', 'desc')->paginate(15);
-    }
-
-    public function getDocumentById($id)
-    {
-        return $this->media::find($id);
+        return $this->media::where(['media_type' => 'document', 'user_id' => Auth::user()->id])->orderBy('created_at', 'desc')->paginate(15);
     }
 
     public function getAudios()
     {
-
+        return $this->media::where(['media_type' => 'audio', 'user_id' => Auth::user()->id])->orderBy('created_at', 'desc')->paginate(15);
     }
 
     public function getVideos()
     {
-
+        return $this->media::where(['media_type' => 'video', 'user_id' => Auth::user()->id])->orderBy('created_at', 'desc')->paginate(15);
     }
 
+    public function getEmbeddedVideos()
+    {
+        return $this->media::where(['media_type' => 'embedded', 'user_id' => Auth::user()->id])->orderBy('created_at', 'desc')->paginate(15);
+    }
 }

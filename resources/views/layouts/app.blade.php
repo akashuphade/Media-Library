@@ -34,7 +34,13 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link custom-nav" href="/media/upload">{{ __('Upload Media') }}</a>
+                        </li>
 
+                        <li class="nav-item">
+                            <a class="nav-link custom-nav" href="/media/embed">{{ __('Embed Videos') }}</a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -60,6 +66,18 @@
 
                             <li class="nav-item">
                                 <a class="nav-link custom-nav" href="/media/documents">{{ __('Documents') }}</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link custom-nav" href="/media/audios">{{ __('Audios') }}</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link custom-nav" href="/media/videos">{{ __('Videos') }}</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link custom-nav" href="/media/embedded">{{ __('Embedded Videos') }}</a>
                             </li>
 
                             <li class="nav-item dropdown">
